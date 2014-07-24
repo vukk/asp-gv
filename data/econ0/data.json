@@ -1,0 +1,266 @@
+{
+  "nodes": [
+    {
+      "label": "n1", 
+      "y": 771.22, 
+      "x": 270.0, 
+      "id": "1", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n3", 
+      "y": 743.5500000000001, 
+      "x": 1220.1000000000001, 
+      "id": "3", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n2", 
+      "y": 180.0, 
+      "x": 749.8199999999999, 
+      "id": "2", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n5", 
+      "y": 1110.2, 
+      "x": 553.5600000000001, 
+      "id": "5", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n4", 
+      "y": 1083.1999999999998, 
+      "x": 983.87, 
+      "id": "4", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n7", 
+      "y": 684.37, 
+      "x": 717.4, 
+      "id": "7", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n6", 
+      "y": 351.92, 
+      "x": 372.95000000000005, 
+      "id": "6", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n8", 
+      "y": 353.59000000000003, 
+      "x": 1114.7, 
+      "id": "8", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }
+  ], 
+  "edges": [
+    {
+      "to": "8", 
+      "label": 1, 
+      "from": "5", 
+      "id": "1", 
+      "width": 1
+    }, 
+    {
+      "to": "6", 
+      "label": 1, 
+      "from": "1", 
+      "id": "2", 
+      "width": 1
+    }, 
+    {
+      "to": "7", 
+      "label": 1, 
+      "from": "2", 
+      "id": "3", 
+      "width": 1
+    }, 
+    {
+      "to": "6", 
+      "label": 1, 
+      "from": "7", 
+      "id": "4", 
+      "width": 1
+    }, 
+    {
+      "to": "4", 
+      "label": 1, 
+      "from": "3", 
+      "id": "5", 
+      "width": 1
+    }, 
+    {
+      "to": "2", 
+      "label": 1, 
+      "from": "1", 
+      "id": "6", 
+      "width": 1
+    }, 
+    {
+      "to": "8", 
+      "label": 1, 
+      "from": "3", 
+      "id": "7", 
+      "width": 1
+    }, 
+    {
+      "to": "4", 
+      "label": 1, 
+      "from": "5", 
+      "id": "8", 
+      "width": 1
+    }, 
+    {
+      "to": "8", 
+      "label": 1, 
+      "from": "2", 
+      "id": "9", 
+      "width": 1
+    }, 
+    {
+      "to": "5", 
+      "label": 1, 
+      "from": "1", 
+      "id": "10", 
+      "width": 1
+    }, 
+    {
+      "to": "2", 
+      "label": 1, 
+      "from": "3", 
+      "id": "11", 
+      "width": 1
+    }, 
+    {
+      "to": "4", 
+      "label": 1, 
+      "from": "2", 
+      "id": "12", 
+      "width": 1
+    }, 
+    {
+      "to": "7", 
+      "label": 1, 
+      "from": "3", 
+      "id": "13", 
+      "width": 1
+    }, 
+    {
+      "to": "7", 
+      "label": 1, 
+      "from": "5", 
+      "id": "14", 
+      "width": 1
+    }, 
+    {
+      "to": "6", 
+      "label": 1, 
+      "from": "4", 
+      "id": "15", 
+      "width": 1
+    }, 
+    {
+      "to": "8", 
+      "label": 1, 
+      "from": "7", 
+      "id": "16", 
+      "width": 1
+    }, 
+    {
+      "to": "4", 
+      "label": 1, 
+      "from": "1", 
+      "id": "17", 
+      "width": 1
+    }, 
+    {
+      "to": "5", 
+      "label": 1, 
+      "from": "2", 
+      "id": "18", 
+      "width": 1
+    }, 
+    {
+      "to": "6", 
+      "label": 1, 
+      "from": "3", 
+      "id": "19", 
+      "width": 1
+    }, 
+    {
+      "to": "8", 
+      "label": 1, 
+      "from": "4", 
+      "id": "20", 
+      "width": 1
+    }, 
+    {
+      "to": "6", 
+      "label": 1, 
+      "from": "5", 
+      "id": "21", 
+      "width": 1
+    }, 
+    {
+      "to": "7", 
+      "label": 1, 
+      "from": "4", 
+      "id": "22", 
+      "width": 1
+    }, 
+    {
+      "to": "3", 
+      "label": 1, 
+      "from": "1", 
+      "id": "23", 
+      "width": 1
+    }, 
+    {
+      "to": "7", 
+      "label": 1, 
+      "from": "1", 
+      "id": "24", 
+      "width": 1
+    }, 
+    {
+      "to": "8", 
+      "label": 1, 
+      "from": "1", 
+      "id": "25", 
+      "width": 1
+    }, 
+    {
+      "to": "6", 
+      "label": 1, 
+      "from": "2", 
+      "id": "26", 
+      "width": 1
+    }, 
+    {
+      "to": "8", 
+      "label": 1, 
+      "from": "6", 
+      "id": "27", 
+      "width": 1
+    }, 
+    {
+      "to": "5", 
+      "label": 1, 
+      "from": "3", 
+      "id": "28", 
+      "width": 1
+    }
+  ]
+}

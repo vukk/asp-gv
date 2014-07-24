@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>ASP-GV js - demo-mini</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+  <style type="text/css">
+    body { padding-top: 70px; }
+    /* NOTE: this is the only way to set the height & width in vis.js! */
+    #canvas-div { width: 100%; height: 600px; }
+    /*#canvas-div { width: 800px; height: 600px; }*/
+  </style>
+
+  <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<div id="nav-main" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">ASP-GV js</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Index</a></li>
+        <li><a href="demo.html">Demo</a></li>
+        <li><a href="demo-full.html">Fullpage demo</a></li>
+        <li class="active"><a href="demo-mini.html">Partial page demo</a></li>
+      </ul>
+      <!-- this probably isn't the correct way to do this in bootstrap -->
+        <form class="navbar-form navbar-right"
+          onsubmit="return false;">
+          <input id="jsonDataFile" class="form-control" type="hidden" value="data/econ0/data.json" size="20" />
+          <input id="jsonTimeFile" class="form-control" type="hidden" value="data/econ0/time.json" size="20" />
+          <input id="jsonSolnFile" class="form-control" type="hidden" value="data/econ0/soln.json" size="20" />
+          <input id="nthRoot" class="form-control" type="hidden" value="1.0" size="3" />
+          <label class="control-label" for="stepCounter"><span style="color: lightgray;">Step</span></label>
+          <input id="stepCounter" class="form-control" type="text" value="0" size="3" readonly />
+          <div class="form-group">
+            <label class="control-label" for="toNext"><span style="color: lightgray;">Next event in</span></label>
+            <input id="toNext" class="form-control" type="text" value="" size="10" readonly />
+          </div>
+          <button id="btn-prev" onclick="aspgv.first()" type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-fast-backward"></span>
+          </button>
+          <button id="btn-prev" onclick="aspgv.prev()" type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-step-backward"></span>
+          </button>
+          <button id="btn-play" onclick="aspgv.play()" type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-play"></span>
+          </button>
+          <button id="btn-pause" onclick="aspgv.pause()" type="button" class="btn btn-warning">
+            <span class="glyphicon glyphicon-pause"></span>
+          </button>
+          <button id="btn-next" onclick="aspgv.next()" type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-step-forward"></span>
+          </button>
+          <button id="btn-last" onclick="aspgv.last()" type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-fast-forward"></span>
+          </button>
+        </form>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Visualization as a part of a page</h3>
+    </div>
+    <div class="panel-body">
+
+      <div id="canvas-div"><!-- NOTE: height and width have to be set in CSS -->
+        <!-- vis.js inserts the canvas here -->
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="js/vis/vis.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script type="text/javascript" src="js/jquery-timer/jquery.timer.js"></script>
+<script type="text/javascript" src="js/asp-gv.js"></script>
+
+<!-- config & start visualization -->
+<script type="text/javascript">
+// Configure physics
+aspgv.physicsOptions = {
+  barnesHut: {
+    gravitationalConstant: -2000,
+    centralGravity: 0.2,
+    springLength: 25,
+    springConstant: 0.010,
+    damping: 0.38
+  }
+};
+
+// Update the value of the toNext form field "real time" with a callback
+$toNext = document.getElementById('toNext'); // fetch the element
+aspgv.timerUpdateCallback = function (time) {
+  $toNext.value = time;
+};
+
+// Initialize & start visualization
+aspgv.init(
+    'canvas-div',
+    // get these values from the hidden form fields above
+    document.getElementById('jsonDataFile').value,
+    document.getElementById('jsonTimeFile').value,
+    document.getElementById('jsonSolnFile').value,
+    document.getElementById('nthRoot').value,
+    // callback, before step
+    function(stepNum, prog) {
+    document.getElementById('stepCounter').value = stepNum.toString();
+    },
+    // callback, after step
+    function(stepNum, prog) {},
+    // disable resizing script?
+    true
+);
+
+</script>
+
+
+</body>
+</html>
+

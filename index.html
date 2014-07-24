@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>ASP-GV js - index</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+  <style type="text/css">
+    body { padding-top: 70px; }
+  </style>
+
+  <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">ASP-GV js</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html">Index</a></li>
+        <li><a href="demo.html">Demo</a></li>
+        <li><a href="demo-full.html">Fullpage demo</a></li>
+        <li><a href="demo-mini.html">Partial page demo</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="jumbotron">
+    <h1>ASP-GV js</h1>
+    <h2>A script for visualizing changing edge sets of graphs/networks</h2>
+    <p>This script was developed for visualizing <a href="http://potassco.sourceforge.net/">clasp</a> outputs from graph encodings, where the edge sets are changing (eg. because we are optimizing). Showing the visualization requires some HTML, Javascript, the data in JSON format and a modern browser.</p>
+    <p>
+    <a class="btn btn-lg btn-success" href="demo.html" role="button">See Demo &raquo;</a>
+    <a class="btn btn-lg btn-primary" href="https://github.com/vukk/asp-gv" role="button">View code at Github &raquo;</a>
+    </p>
+  </div>
+
+  <!-- TODO: sections "why" and "previous work" -->
+
+  <div class="docs-section">
+    <h1 class="page-header">Usage</h1>
+
+    <p class="lead">See the demos for usage! The fullpage demo is the minimal example.</p>
+
+  </div>
+  <div class="docs-section">
+    <h1 class="page-header">Options</h1>
+    <p class="lead">Available configuration options are as follows:</p>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Panel heading</div>
+      <div class="panel-body">
+        <p>...</p>
+      </div>
+
+      <!-- Table -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><code>aspgv.physicsOptions</code></td>
+          <td>See vis.js <a href="http://visjs.org/docs/network.html#Physics">physics options for network</a>. This is passed directly to vis.js upon initialization.</td>
+        </tr>
+        <tr>
+          <td><code>aspgv.springLengths</code></td>
+          <td>This can be used to give different color edges different springLengths for physics. One thing that can be done with this is to force the "older" edges to be longer and "go around" the current edgeset. See the <a href="demo.html">demo</a> for example.</td>
+        </tr>
+        <tr>
+          <td><code>aspgv.timerUpdateCallback</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr>
+          <td><code>aspgv.beforeStepCallback</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr>
+          <td><code>aspgv.afterStepCallback</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr>
+          <td><code>aspgv.calculateFreeHeight</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr>
+          <td><code>aspgv.calculateFreeWidth</code></td>
+          <td>TODO</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+    If needed, the variables inside aspgv, eg. objects containing nodes and edges, are publicly accessible. See the source code.
+    </p>
+  </div>
+  <div class="docs-section">
+    <h1 class="page-header">Tools</h1>
+
+    <p class="lead">Here are the tools that can be used with this script, to produce the JSON data from ASP encodings:</p>
+
+    <ul>
+      <li><a href="https://github.com/vukk/asp-gv-convert-py">Converting clasp and gringo outputs to JSON</a></li>
+      <li><a href="https://github.com/vukk/tcat-monotonic">Timestamping clasp output with supported timestamp format</a></li>
+    </ul>
+
+  </div>
+  <div class="docs-section">
+    <h1 class="page-header">Limitations</h1>
+
+    <p class="lead">Some limitations:</p>
+
+    <p>TODO: Same origin policy and JSON / JSONP</p>
+    <p>TODO: visjs and modifying with the physics, best results for visualizations are achieved by customizing for each case.</p>
+  </div>
+  <div class="docs-section">
+    <h1 class="page-header">About</h1>
+    <p>Developed as part of the Aalto School of Science Department of Information and Computer Science <a href="http://ics.aalto.fi/en/current/news/view/ics_summer_internship_program_2014/">Summer Internship Program 2014</a>, with the topic "Answer-Set Programming Tools".</p><p>For contact, see <a href="http://research.ics.aalto.fi/cl/">Computational Logic</a> group of Aalto University <a href="http://ics.aalto.fi/en/">ICS department</a>.</p>
+  </div>
+
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ASP-GV js - demo-full</title>
+  <style type="text/css">
+    html,body { margin: 0; }
+  </style>
+</head>
+
+<body>
+
+<div id="canvas-div">
+  <!-- vis.js inserts the canvas here -->
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/vis/vis.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script type="text/javascript" src="js/jquery-timer/jquery.timer.js"></script>
+<script type="text/javascript" src="js/asp-gv.js"></script>
+
+<!-- config & start visualization -->
+<script type="text/javascript">
+// Initialize & start visualization
+aspgv.init(
+    'canvas-div', // name of the div, where vis.js inserts the canvas
+    'data/tsp-1/data.json',
+    'data/tsp-1/time.json',
+    'data/tsp-1/soln.json',
+    2.5 // nthRoot
+);
+</script>
+
+</body>
+</html>
+
