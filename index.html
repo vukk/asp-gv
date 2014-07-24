@@ -63,95 +63,255 @@
   <div class="docs-section">
     <h1 class="page-header">Usage</h1>
 
-    <p class="lead">See the demos for usage! The fullpage demo is the minimal example.</p>
+    <p class="lead">See the demos and their source for usage. The fullpage demo is the minimal example.</p>
 
-  </div>
-  <div class="docs-section">
-    <h1 class="page-header">Options</h1>
-    <p class="lead">Available configuration options are as follows:</p>
+    <h3>Requirements</h3>
+
+    <p>The script expects <a href="http://jquery.com/">jQuery</a>, <a href="http://visjs.org/">vis.js</a> and either <a href="http://underscorejs.org/">Underscore.js</a> or <a href="http://lodash.com/">lodash</a> to be loaded beforehand and available at loading time.</p>
+
+    <h3>Init method</h3>
     <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">Panel heading</div>
+      <div class="panel-heading"><code>aspgv.init</code> arguments</div>
       <div class="panel-body">
-        <p>...</p>
+        <table class="table">
+          <tbody>
+          <tr>
+            <td><code>visjsCanvasDivId</code></td>
+            <td>String &mdash; ID for the div where vis.js is expected to insert the <code>&lt;canvas&gt;</code> tag.</td>
+          </tr>
+          <tr>
+            <td><code>jsonDataURL</code></td>
+            <td>String &mdash; URL pointing to the JSON file containing the graph (see <a href="#limitations">limitations</a> and <a href="#json-format">JSON format</a>)</td>
+          </tr>
+          <tr>
+            <td><code>jsonTimeURL</code></td>
+            <td>String &mdash; URL pointing to the JSON file containing the time deltas (times to wait between edge sets) (see <a href="#limitations">limitations</a> and <a href="#json-format">JSON format</a>)</td>
+          </tr>
+          <tr>
+            <td><code>jsonSolnURL</code></td>
+            <td>String &mdash; URL pointing to the JSON file containing the edge set of each solution (see <a href="#limitations">limitations</a> and <a href="#json-format">JSON format</a>)</td>
+          </tr>
+          <tr>
+            <td><code>rootNum</code></td>
+            <td>Float &mdash; Root applied to edge weights when visualizing. Larger number means thinner edges.</td>
+          </tr>
+          <tr>
+            <td><code>beforeStepCallback</code></td>
+            <td>Function &mdash; A function that is called before each solution step.</td>
+          </tr>
+          <tr>
+            <td><code>afterStepCallback</code></td>
+            <td>Function &mdash; A function that is called after each solution step, before the next timer is set.</td>
+          </tr>
+          <tr>
+            <td><code>disableResizeScript</code></td>
+            <td>Boolean &mdash; Set to <code>true</code> disable the canvas resizing script. Useful when the visualization is not fullscreen or rest-of-screen. See demos &amp; and their sources.</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Table -->
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Option</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td><code>aspgv.physicsOptions</code></td>
-          <td>See vis.js <a href="http://visjs.org/docs/network.html#Physics">physics options for network</a>. This is passed directly to vis.js upon initialization.</td>
-        </tr>
-        <tr>
-          <td><code>aspgv.springLengths</code></td>
-          <td>This can be used to give different color edges different springLengths for physics. One thing that can be done with this is to force the "older" edges to be longer and "go around" the current edgeset. See the <a href="demo.html">demo</a> for example.</td>
-        </tr>
-        <tr>
-          <td><code>aspgv.timerUpdateCallback</code></td>
-          <td>TODO</td>
-        </tr>
-        <tr>
-          <td><code>aspgv.beforeStepCallback</code></td>
-          <td>TODO</td>
-        </tr>
-        <tr>
-          <td><code>aspgv.afterStepCallback</code></td>
-          <td>TODO</td>
-        </tr>
-        <tr>
-          <td><code>aspgv.calculateFreeHeight</code></td>
-          <td>TODO</td>
-        </tr>
-        <tr>
-          <td><code>aspgv.calculateFreeWidth</code></td>
-          <td>TODO</td>
-        </tr>
-        </tbody>
-      </table>
     </div>
-    <p>
-    If needed, the variables inside aspgv, eg. objects containing nodes and edges, are publicly accessible. See the source code.
+    <div class="docs-section">
+      <h1 class="page-header"><a id="options"></a>Options</h1>
+      <p class="lead">Available configuration options are as follows:</p>
+      <div class="panel panel-default">
+        <div class="panel-heading">Configuration options</div>
+        <div class="panel-body">
+
+          <!-- Table -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><code>aspgv.physicsOptions</code></td>
+              <td>Object &mdash; See vis.js <a href="http://visjs.org/docs/network.html#Physics">physics options for network</a>. This is passed directly to vis.js upon initialization.</td>
+            </tr>
+            <tr>
+              <td><code>aspgv.springLengths</code></td>
+              <td>Object &mdash; This can be used to give different color edges different springLengths for physics. One thing that can be done with this is to force the "older" edges to be longer and "go around" the current edgeset. See the <a href="demo.html">demo</a> for example usage.</td>
+            </tr>
+            <tr>
+              <td><code>aspgv.timerUpdateCallback</code></td>
+              <td>Function &mdash; This function is called every time the aspgv inner timer updates itself. By default this is every 90ms. To change the default see timerDecrement. The function is called with one argument: string containing the time until next event in the "MM:SS:ss" format. Check the source for <code>timerCurrentTime</code> if you need some other format.</td>
+            </tr>
+            <tr>
+              <td><code>aspgv.timerDecrement</code></td>
+              <td>Int &mdash; How often the internal timer is updated. Defaults to 90ms.</td>
+            </tr>
+            <tr>
+              <td><code>aspgv.calculateFreeHeight</code></td>
+              <td>Function &mdash; A function that is used to calculate the free height that the canvas should fill, if the resizing script is on. See the <a href="demo.html">demo</a> for example usage. Use CSS <code>html,body { overflow: hidden; }</code> to hide the scrollbars if needed. In some cases <code>display: block;</code> is also required.</td>
+            </tr>
+            <tr>
+              <td><code>aspgv.calculateFreeWidth</code></td>
+              <td>Function &mdash; See <code>calculateFreeHeight</code> above.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p>
+      If needed, the variables inside aspgv, eg. objects containing nodes and edges, are publicly accessible. See the source code. You need to understand the source to know the timing of when you wish to execute your custom code.
+      </p>
+    </div>
+    <div class="docs-section">
+      <h1 class="page-header"><a id="tools"></a>Tools</h1>
+
+      <p class="lead">Here are the tools that can be used with this script, to produce the JSON data from ASP encodings:</p>
+
+      <ul>
+        <li><a href="https://github.com/vukk/asp-gv-convert-py">Converting clasp and gringo outputs to JSON</a></li>
+        <li><a href="https://github.com/vukk/tcat-monotonic">Timestamping clasp output with supported timestamp format</a></li>
+      </ul>
+
+    </div>
+
+    <div class="docs-section">
+      <h1 class="page-header"><a id="limitations"></a>Limitations</h1>
+
+      <p class="lead">Some limitations:</p>
+
+      <ul>
+        <li>
+        <p>Because the script uses JSON and not JSONP, the <a href="http://en.wikipedia.org/wiki/Same-origin_policy">same origin policy</a> can cause problems, for example while developing. In the case of development, use eg. <code>python -m SimpleHTTPServer</code> to sidestep the issue.</p>
+        </li>
+        <li>
+        <p>The best visualizations are always instance specific. Sometimes just modifying the <code>physicsOptions</code> option is not enough, and going deep into vis.js physics and modifying this script is necessary to achieve best results.</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="docs-section">
+      <h1 class="page-header"><a id="json-format"></a>JSON format</h1>
+
+      <p class="lead">This section describes the JSON format that the script accepts.</p>
+
+      <h3>Data / graph <code>jsonDataURL</code></h3>
+
+      <p>
+      <pre class="prettyprint">
+object {
+  array [
+    object {
+      string label; # label to show on screen
+      float x;      # x-coordinate initially
+      float y;      # y-coordinate initially
+      string id;    # should be a unique integer
+      boolean "allowedToMoveX"; # should be always set to true
+      boolean "allowedToMoveY"; # should be always set to true
+    }] nodes;
+  array [
+    object {
+      string id;    # should be a unique integer
+      string from;  # integer id of the source node
+      string to;    # integer id of the destination node
+      int label?;   # weight of the edge to show on visualization, optional
+      int width;    # weight/width of the edge
+    }] edges;
+};</pre>
+      <pre class="prettyprint">
+{
+  "nodes": [
+    {
+      "label": "node1", 
+      "y": 100.0, 
+      "x": 200.0, 
+      "id": "1", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }, 
+    {
+      "label": "n2", 
+      "y": 200.0, 
+      "x": 100.0, 
+      "id": "2", 
+      "allowedToMoveX": true, 
+      "allowedToMoveY": true
+    }
+  ],
+  "edges": [
+    {
+      "id": 1, 
+      "from": "1", 
+      "to": "2", 
+      "label": "5",
+      "width": 5
+    }, 
+  ];
+};</pre>
+      </p>
+
+      <h3>Times and optimums <code>jsonTimeURL</code></h3>
+
+      <p>
+      <pre class="prettyprint">
+object {
+  string stepNumber =&gt; array [ float timedelta, string optimum ]
+};</pre>
+      <pre class="prettyprint">
+{
+  "1": [
+    8.644088983535767, 
+    "26534"
+  ], 
+  "2": [
+    5.716519117355347, 
+    "22302"
+  ],
+  "3": [
+    8.644088983535767, 
+    "18023"
+  ], 
+  "4": [
+    36.53210711479187, 
+    "17790"
+  ]
+}
+</pre>
+      </p>
+
+
+      <h3>Solution edge sets <code>jsonSolnURL</code></h3>
+
+      <p>
+      <pre class="prettyprint">
+object {
+  string stepNumber =&gt; array [ float edgeId * ]
+};</pre>
+      <pre class="prettyprint">
+{
+  "1": [ 4, 21, 20, 22, 15, 19, 9, 26, 12, 24, 2, 10, 17, 23 ], 
+  "2": [ 4, 21, 28, 9, 26, 18, 12, 24, 2, 10, 17, 23, 6 ], 
+  "3": [ 21, 20, 8, 13, 19, 9, 18, 12, 24, 2, 10, 17, 23 ], 
+  "4": [ 21, 20, 13, 19, 9, 18, 12, 24, 2, 10, 17, 23, 6]
+}
+</pre>
     </p>
-  </div>
-  <div class="docs-section">
-    <h1 class="page-header">Tools</h1>
 
-    <p class="lead">Here are the tools that can be used with this script, to produce the JSON data from ASP encodings:</p>
+    <p>Note: these are not proper JSONSchemas but ad hoc desriptions that suffice for now.</a>
 
-    <ul>
-      <li><a href="https://github.com/vukk/asp-gv-convert-py">Converting clasp and gringo outputs to JSON</a></li>
-      <li><a href="https://github.com/vukk/tcat-monotonic">Timestamping clasp output with supported timestamp format</a></li>
-    </ul>
+    </div>
 
-  </div>
-  <div class="docs-section">
-    <h1 class="page-header">Limitations</h1>
+    <div class="docs-section">
+      <h1 class="page-header"><a id="about"></a>About</h1>
+      <p>Developed as part of the Aalto School of Science Department of Information and Computer Science <a href="http://ics.aalto.fi/en/current/news/view/ics_summer_internship_program_2014/">Summer Internship Program 2014</a>, with the topic <em>Answer-Set Programming Tools</em>.</p><p>For contact, see <a href="http://research.ics.aalto.fi/cl/">Computational Logic</a> group of Aalto University <a href="http://ics.aalto.fi/en/">ICS department</a> or <a href="https://github.com/vukk/asp-gv">GitHub</a>.</p>
+    </div>
 
-    <p class="lead">Some limitations:</p>
-
-    <p>TODO: Same origin policy and JSON / JSONP</p>
-    <p>TODO: visjs and modifying with the physics, best results for visualizations are achieved by customizing for each case.</p>
-  </div>
-  <div class="docs-section">
-    <h1 class="page-header">About</h1>
-    <p>Developed as part of the Aalto School of Science Department of Information and Computer Science <a href="http://ics.aalto.fi/en/current/news/view/ics_summer_internship_program_2014/">Summer Internship Program 2014</a>, with the topic "Answer-Set Programming Tools".</p><p>For contact, see <a href="http://research.ics.aalto.fi/cl/">Computational Logic</a> group of Aalto University <a href="http://ics.aalto.fi/en/">ICS department</a>.</p>
-  </div>
-
-</div><!-- /.container -->
+  </div><!-- /.container -->
 
 
-<!-- Bootstrap core JavaScript
+  <!-- Bootstrap core JavaScript
     ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
-</body>
-</html>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=doxy"></script>
+  </body>
+  </html>
 
