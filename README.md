@@ -20,4 +20,4 @@ A graph with node positions fixed, original layout is with graphviz neato:
 ![](screenshots/aspgv-tsppoc-fixed1.png?raw=true)
 
 Instead, we use force directed layouts:
-![](screenshots/aspgv-tsp1-fullscreen?raw=true)
+![](screenshots/aspgv-tsp1-fullscreen.png?raw=true)
