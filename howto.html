@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>ASP-GV js - howto</title>
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+  <style type="text/css">
+    body { padding-top: 70px; }
+  </style>
+
+  <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ASP-GV js</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Index</a></li>
+        <li><a href="demo.html">Demo</a></li>
+        <li><a href="demo-full.html">Fullpage demo</a></li>
+        <li><a href="demo-mini.html">Partial page demo</a></li>
+        <li class="active"><a href="howto.html">Howto</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="jumbotron">
+    <h1>Howto</h1>
+    <h2>A step-by-step guide, from the ASP encodings to visualization</h2>
+  </div>
+
+  <div class="docs-section">
+    <h1 class="page-header">Requirements</h1>
+
+    <p class="lead">The following tools are needed for this tutorial:</p>
+    <p>
+    <ul>
+      <li><a href="http://git-scm.com/">Git</a></li>
+      <li><a href="http://potassco.sourceforge.net/">Clasp</a> &mdash; for solving</li>
+      <li><a href="http://potassco.sourceforge.net/">Gringo</a> &mdash; for outputting the graph in textual format</li>
+      <li><a href="https://github.com/vukk/tcat-monotonic">tcat-monotonic</a> &mdash; for timestamping the clasp output</li>
+      <li><a href="https://github.com/vukk/asp-gv-convert-py">asp-gv-convert-py</a> &mdash; for converting the output of the tools above into JSON</li>
+    </ul>
+    </p>
+  </div>
+
+  <div class="docs-section">
+    <h1 class="page-header">Step 1 &ndash; cloning the ASP-GV repository</h1>
+
+    <p class="lead">The simplest way to start is to clone the whole ASP-GV repo that contains the visualization script and demos. The aim is to modify the demo pages to show your instance.</p>
+
+    <p>Use <kbd>git clone https://github.com/vukk/asp-gv.git</kbd> to clone the repository, then <kbd>cd asp-gv/</kbd> into the directory. When inside, initialize git submodules with <kbd>git submodule init</kbd> and pull the submodules with <kbd>git submodule update</kbd>. Now you have the repository set up locally and you can check that the default demos work with <kbd>python -m SimpleHTTPServer</kbd> and pointing your browser towards <a href="http://localhost:8000/">http://localhost:8000/</a>.</p>
+
+  </div>
+
+  <div class="docs-section">
+    <h1 class="page-header">Step 2 &ndash; clasp and gringo outputs</h1>
+
+    <p class="lead">To visualize the changing sets of edges, you need to have the clasp output where these sets of edges can be read from. If your problem has weighted edges (costs) and you wish the edges to be weighted in the visualization too, then gringo's textual output is required. Additionally to make the visualization even nicer, you can add the times between solutions to the visualization. This is done by timestamping the clasp output lines with <a href="https://github.com/vukk/tcat-monotonic">tcat-monotonic</a>.</p>
+
+    <h3>About the encoding</h3>
+
+    <p>The encoding should have the chosen edges represented with a binary predicate, eg. <code>cycle/2</code>. The nodes should be integers (support for any strhing could be added later...) and the chosen edges -predicate should have the format <code>predicate(NodeId1, NodeId2).</code>.</p>
+
+    <p>If the encoding has costs, they should be represented with trinary predicate, eg. <code>cost/3</code>. The format should be <code>predicate(NodeId1, NodeId2, Weight).</code>.</p>
+
+    <h3>Clasp</h3>
+    <p>Let's assume that you have your encoding in file <code>encoding.asp</code> instance in the file <code>instance.asp</code>. Let's also assume that the encoding is optimizing something (eg. <code>#minimize</code>-statement). Then the piping from the gringo grounder to clasp and tcat-monotonic is the following: <kbd>gringo encoding.asp instance.asp | clasp | tcat-monotonic &gt; clasp_timestamped.out</kbd>.</p>
+    <p>The output should look something like this:
+    <pre>1058325.011067	clasp version 3.0.4
+1058325.011120	Reading from stdin
+1058325.030965	Solving...
+1058325.032046	Answer: 1
+1058325.032063	cycle(39,15) cycle(38,3) cycle(37,27) cycle(36,38) cycle(35,17) cycle(34,22) cycle(33,9) cycle(32,8) cycle(31,20) cycle(30,7) cycle(29,19) cycle(28,39) cycle(27,24) cycle(26,28) cycle(25,37) cycle(24,31) cycle(23,29) cycle(22,10) cycle(21,23) cycle(20,21) cycle(19,33) cycle(18,26) cycle(17,18) cycle(16,5) cycle(15,32) cycle(14,11) cycle(13,16) cycle(12,13) cycle(11,1) cycle(10,35) cycle(9,6) cycle(8,14) cycle(7,36) cycle(6,12) cycle(5,30) cycle(4,2) cycle(3,34) cycle(2,25) cycle(1,4)
+1058325.032085	Optimization: 103
+1058325.032213	Answer: 2
+1058325.032234	cycle(39,15) cycle(38,3) cycle(37,18) cycle(36,38) cycle(35,27) cycle(34,22) cycle(33,9) cycle(32,8) cycle(31,20) cycle(30,7) cycle(29,19) cycle(28,39) cycle(27,24) cycle(26,31) cycle(25,37) cycle(24,17) cycle(23,29) cycle(22,10) cycle(21,1) cycle(20,21) cycle(19,28) cycle(18,26) cycle(17,23) cycle(16,5) cycle(15,32) cycle(14,11) cycle(13,16) cycle(12,13) cycle(11,25) cycle(10,35) cycle(9,6) cycle(8,14) cycle(7,36) cycle(6,12) cycle(5,30) cycle(4,2) cycle(3,34) cycle(2,33) cycle(1,4)
+1058325.032258	Optimization: 98
+
+...
+
+1058355.905292	Answer: 16
+1058355.905336	cycle(39,15) cycle(38,3) cycle(37,27) cycle(36,38) cycle(35,17) cycle(34,22) cycle(33,39) cycle(32,25) cycle(31,29) cycle(30,10) cycle(29,19) cycle(28,20) cycle(27,1) cycle(26,31) cycle(25,37) cycle(24,9) cycle(23,24) cycle(22,5) cycle(21,23) cycle(20,21) cycle(19,28) cycle(18,26) cycle(17,18) cycle(16,7) cycle(15,32) cycle(14,11) cycle(13,16) cycle(12,13) cycle(11,8) cycle(10,35) cycle(9,6) cycle(8,4) cycle(7,36) cycle(6,2) cycle(5,30) cycle(4,12) cycle(3,34) cycle(2,33) cycle(1,14)
+1058355.905360	Optimization: 52
+1058375.059252	OPTIMUM FOUND
+1058375.059299	
+1058375.059311	Models       : 16    
+1058375.059322	  Optimum    : yes
+1058375.059333	Optimization : 52
+1058375.059343	Calls        : 1
+1058375.059353	Time         : 50.050s (Solving: 50.03s 1st Model: 0.00s Unsat: 19.15s)
+1058375.059365	CPU Time     : 49.980s
+    </pre>
+    </p>
+    <p>Timestamping is optional. If you wish to default for 4.0s time intervals in the visualization, then the timestamps are not needed and the piping is just <kbd>gringo encoding.asp instance.asp | clasp &gt; clasp.out</kbd>.</p>
+
+    <h3>Gringo</h3>
+
+    <p>Use <kbd>gringo -t encoding.asp instance.asp &gt; gringo_text.out</kbd> to output the grounded instance in textual form. This step is optional. The edge weights in the visualization will default to <code>1</code> if gringo's textual output is not provided.</p>
+
+    <p>The important part of the output are the cost predicates:
+    <pre>...
+edge(39,6).
+edge(39,25).
+...
+cost(1,8,4).
+cost(1,39,19).
+cost(1,27,5).
+cost(1,18,17).
+cost(1,4,8).
+cost(1,26,17).
+...
+cost(39,6,9).
+cost(39,25,19).
+...
+    </pre></p>
+
+  </div>
+
+  <div class="docs-section">
+    <h1 class="page-header"><a id="options"></a>Step3 &ndash; conversion to JSON</h1>
+
+    <p class="lead">The actual conversion to JSON accepted by the visualization script is done with <a href="https://github.com/vukk/asp-gv-convert-py">asp-gv-convert-py</a>. There are some options depending on what you chose to do in the previous steps, and depending on what names you gave to the chosen edges -predicate and cost-predicate.</p>
+
+    <p><pre>Usage:
+  ./convert_outputs_to_json.py --edge-pred=&lt;predicate&gt; --clasp-out=&lt;filename&gt;
+        [(--cost-pred=&lt;predicate&gt; --gringo-out=&lt;filename&gt;) --directed]
+        --json-data=&lt;filename&gt; --json-time=&lt;filename&gt; --json-soln=&lt;filename&gt;
+        [--not-opt --not-timestamped]
+
+Options:
+  -e &lt;predicate&gt; --edge-pred=&lt;predicate&gt;      Name of the chosen edge/2
+                                              predicate.
+  -c &lt;filename&gt; --clasp-out=&lt;filename&gt;        Name of the file where the
+                                              timestamped clasp output has
+                                              been saved.
+  -o &lt;predicate&gt; --cost-pred=&lt;predicate&gt;      Name of the cost/3 predicate.
+  -g &lt;filename&gt; --gringo-out=&lt;filename&gt;       Name of the file where the
+                                              output of "gringo -t" has
+                                              been saved.
+  -i --directed                               Indicates that the graph is a
+                                              directed graph. If not given,
+                                              the graph is assumed to be
+                                              undirected.
+  -d &lt;filename&gt; --json-data=&lt;filename&gt;        Path where to save the JSON
+                                              file containing the graph data.
+  -t &lt;filename&gt; --json-time=&lt;filename&gt;        Path where to save the JSON
+                                              file containing the timing
+                                              information.
+  -s &lt;filename&gt; --json-soln=&lt;filename&gt;        Path where to save the JSON
+                                              file containing the solutions
+                                              of each optimization step.
+  --not-opt                                   Flag to indicate that clasp
+                                              output is not from an
+                                              optimization, but still in
+                                              some "smart order" that can
+                                              be visualized.
+  --not-timestamped                           Flag to indicate that clasp
+                                              output is not prepended with
+                                              a timestamp. Time delta will
+                                              be 4.0 seconds.</pre></p>
+
+    <h3>Timestamped clasp output &amp; gringo textual output</h3>
+    <p>With these options, the example command would be
+    <kbd>./convert_outputs_to_json.py -e cycle -c clasp_timestamped.out -o cost -g gringo_text.out -i -d data.json -t time.json -s soln.json</kbd>. If you graph is not directed, drop the <code>-i</code> switch. If you aren't using optimization but just outputting answer sets, add the <code>--not-opt</code> switch.</p>
+
+    <h3>Plain clasp output</h3>
+    <p>The minimal requirement for visualizing is the plain clasp output. In this case the example command would be <kbd>./convert_outputs_to_json.py -e edge -c clasp.out -d data.json -t time.json -s soln.json --not-opt --not-timestamped</kbd></p>
+
+    <h3>JSON</h3>
+    <p>Your JSON files for graph data (data.json), times (time.json), and edge answer sets (soln.json) should now be created.</p>
+
+  </div>
+
+  <div class="docs-section">
+    <h1 class="page-header"><a id="tools"></a>Step 4 &ndash; modify the visualization to point to the new JSON files.</h1>
+
+    <p class="lead">Now that the data is converted, head your way back to the cloned asp-gv repository. Now the aim is to modify the demo.html page to include your visualization data.</p>
+
+    <p>Copy your data.json, time.json and soln.json for example to <code>asp-gv/data/&lt;instancetag&gt;/</code>. Then open the <code>demo.html</code> file in your favourite editor and modify the values of the hidden form fields with IDs <code>jsonDataFile</code>, <code>jsonTimeFile</code> and <code>jsonSolnFile</code>.</p>
+
+    <pre>&lt;input id="jsonDataFile" class="form-control" type="hidden" value="data/econ0/data.json" size="20" /&gt;
+          &lt;input id="jsonTimeFile" class="form-control" type="hidden" value="data/econ0/time.json" size="20" /&gt;
+          &lt;input id="jsonSolnFile" class="form-control" type="hidden" value="data/econ0/soln.json" size="20" /&gt;</pre>
+
+    <p>The value of each input should now point to your JSON files:
+    <pre>&lt;input id="jsonDataFile" class="form-control" type="hidden" value="data/&lt;instancetag&gt;/data.json" size="20" /&gt;
+          &lt;input id="jsonTimeFile" class="form-control" type="hidden" value="data/&lt;instancetag&gt;/time.json" size="20" /&gt;
+          &lt;input id="jsonSolnFile" class="form-control" type="hidden" value="data/&lt;instancetag&gt;/soln.json" size="20" /&gt;</pre>
+    </p>
+
+    <p>Now head over to the visualization in your browser!</p>
+
+    <p>Additionally you can change the <code>nthRoot</code> and physics options. Head to the <a href="index.html">index page</a> to see all options.</p>
+
+    <p>Hint: you can use eg. <a href="https://developer.chrome.com/devtools/index">Chrome developer tools</a> to see javascript errors. The keybinding in chrome is <kbd>Ctrl+Shift+j</kbd>.</p>
+  </div>
+
+  </div><!-- /.container -->
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=doxy"></script>
+  </body>
+  </html>
+

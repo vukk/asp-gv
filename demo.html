@@ -43,6 +43,7 @@
         <li class="active"><a href="demo.html">Demo</a></li>
         <li><a href="demo-full.html">Fullpage demo</a></li>
         <li><a href="demo-mini.html">Partial page demo</a></li>
+        <li><a href="howto.html">Howto</a></li>
       </ul>
       <!-- this probably isn't the correct way to do this in bootstrap -->
         <form class="navbar-form navbar-right"
@@ -52,10 +53,10 @@
           <input id="jsonSolnFile" class="form-control" type="hidden" value="data/econ0/soln.json" size="20" />
           <input id="nthRoot" class="form-control" type="hidden" value="1.0" size="3" />
           <label class="control-label" for="stepCounter"><span style="color: lightgray;">Step</span></label>
-          <input id="stepCounter" class="form-control" type="text" value="0" size="3" readonly />
+          <input id="stepCounter" class="form-control" type="text" value="0" size="1" readonly />
           <div class="form-group">
-            <label class="control-label" for="toNext"><span style="color: lightgray;">Next event in</span></label>
-            <input id="toNext" class="form-control" type="text" value="" size="10" readonly />
+            <label class="control-label" for="toNext"><span style="color: lightgray;">Next event</span></label>
+            <input id="toNext" class="form-control" type="text" value="" size="5" readonly />
           </div>
           <button id="btn-prev" onclick="aspgv.first()" type="button" class="btn btn-success">
             <span class="glyphicon glyphicon-fast-backward"></span>
