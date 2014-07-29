@@ -65,6 +65,21 @@
   <!-- TODO: section "previous work" -->
 
   <div class="docs-section">
+    <h1 class="page-header">Interpretation</h1>
+
+    <p class="lead">Since graphs of interest often have too many edges to show at once, this visualization shows only the edges in current and 3 past sets. Colors are used to separate edges from different sets in the visualization. The meaning of the coloring is as follows:
+    <ul>
+      <li>Green &ndash; an edge that is in the current solution but was <strong>not</strong> in the previous solution</li>
+      <li>Black &ndash; an edge that is in the current solution and was also in the previous solution</li>
+      <li>Red &ndash; an edge that is not in the current solution, but was in the previous solution</li>
+      <li>Orange &ndash; an edge that was in the solution 2 sets ago</li>
+      <li>Yellow &ndash; an edge that was in the solution 3 sets ago</li>
+    </ul>
+    Once an edge passes the yellow stage, it is removed from the screen.
+    </p>
+  </div>
+
+  <div class="docs-section">
     <h1 class="page-header">Usage</h1>
 
     <p class="lead">See the demos and their source for usage. The fullpage demo is the minimal example.</p>
