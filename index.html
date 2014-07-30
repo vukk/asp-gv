@@ -55,6 +55,7 @@
     <h1>ASP-GV js</h1>
     <h2>A script for visualizing changing edge sets of graphs/networks</h2>
     <p>This script was developed for visualizing <a href="http://potassco.sourceforge.net/">clasp</a> outputs from graph encodings, where the edge sets are changing (eg. because we are optimizing). Showing the visualization requires some HTML, Javascript, the data in JSON format and a modern browser.</p>
+    <p>Note: using Chrome for viewing the visualization is the recommended</p>
     <p>
     <a class="btn btn-lg btn-success" href="demo.html" role="button">See Demo &raquo;</a>
     <a class="btn btn-lg btn-primary" href="https://github.com/vukk/asp-gv#why">Why was this made? &raquo;</a>
@@ -197,6 +198,9 @@
       <p class="lead">Some limitations:</p>
 
       <ul>
+        <li>
+        <p>The script was developed using Google Chrome, and using other browsers result in subpar performance and experience.</p>
+        </li>
         <li>
         <p>Because the script uses JSON and not JSONP, the <a href="http://en.wikipedia.org/wiki/Same-origin_policy">same origin policy</a> can cause problems, for example while developing. In the case of development, use eg. <code>python -m SimpleHTTPServer</code> to sidestep the issue.</p>
         </li>
